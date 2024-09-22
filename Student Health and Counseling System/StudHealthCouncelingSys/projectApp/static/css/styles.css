@@ -1,0 +1,68 @@
+body {
+    min-height: 100vh;
+}
+
+#wrapper {
+    display: flex;
+    
+}
+
+#wrapper #content-wrapper {
+    background-color: white;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+.sidebar {
+    position: relative;
+    width: 300px;
+    min-height: 100vh;
+    background-color: white;
+    padding: 10px;
+    border-right: 0.5px solid rgb(0, 0, 0, .2);
+}
+
+.navbar {
+    height: 100px;
+    background-color: white;
+    border-bottom: 0.5px solid rgb(0, 0, 0, .2);
+}
+
+.navbar-nav {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.nav-item {
+    color: black;
+}
+
+.add-patient-form {
+    padding: 50px;
+    border: 0.5px solid rgb(0, 0, 0, .2);
+    border-radius: 10px;
+}
+
+.add-patient-form button {
+    background-color: #665DFF;
+}
+
+.add-patient-form button:hover {
+    background-color: #4943bb;
+}
+
+.add-patient-form h2 {
+    color: #665DFF;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+}
+
+.form-content {
+    display: flex;
+}
