@@ -1,3 +1,35 @@
+## System Overview
+### Core Components
+1. **Login Module**  
+   - Secure authentication using Django's built-in user model.
+   - Role-based access for students, staff, and admins.
+
+2. **Dashboard**  
+   - A central hub tailored for different user roles:
+     - Students: View appointments, prescriptions, notifications, and health records.
+     - Counseling Staff: Access patient lists, schedule appointments, and review health records.
+   
+3. **Book Appointment Module**  
+   - Students can book appointments with healthcare or counseling staff.
+   - Options for service type, reason, and preferred date.
+
+4. **Health Records Management**  
+   - Comprehensive repository of medical and counseling histories for each student.
+   - Easy access to records for both students and staff.
+
+5. **Prescription Management**  
+   - View and update prescribed medications, dosage, and progress reports.
+
+6. **Notification System**  
+   - Keeps users informed about new appointments, reminders, and other important updates.
+
+7. **Appointment Management**  
+   - Staff can manage appointment schedules and approvals.
+   - Status updates for students regarding their appointment requests.
+
+
+
+
 --SET TO CHANGE--
 
 FUNCTIONAL REQUIREMENT DOCUMENT
