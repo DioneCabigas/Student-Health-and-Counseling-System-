@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Patient, Appointment, AppointmentRequest
+from .models import Patient, Appointment
 from .forms import AppointmentSchedulingForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -9,9 +9,13 @@ from django.contrib.auth import login, logout
 def dashboard_view(request):
     patients = Patient.objects.all()
     appointments = Appointment.objects.all()
-    appointment_requests = AppointmentRequest.objects.all()
+    appointment_requests = Appointment.objects.filter(approval=False)
 
-    context = {'patients' : patients, 'appointments': appointments, 'appointment_requests': appointment_requests}
+    context = {
+        'patients' : patients, 
+        'appointments': appointments, 
+        'appointment_requests': appointment_requests
+    }
     return render(request, 'dashboard.html', context)
 
 def register_view(request):
@@ -63,9 +67,17 @@ def appointment_scheduling_view(request):
     return render(request, 'appointment_add_patient.html', context)
 
 def appointment_request_view(request):
-    appointmentRequests = AppointmentRequest.objects.all()
+    appointmentRequests = Appointment.objects.all()
 
-    context = {'appointmentRequests': appointmentRequests}
+    if request.method == 'POST':
+        form = AppointmentSchedulingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('appointment_list')
+    else:
+        form = AppointmentSchedulingForm()
+
+    context = {'appointmentRequests': appointmentRequests, 'form': form}
     return render(request, 'appointment_request.html', context)
 
 # STUDENT

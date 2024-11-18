@@ -14,6 +14,5 @@ class AppointmentSchedulingForm(ModelForm):
             'staff' : forms.TextInput(attrs={'class' : 'form-select', 'placeholder': 'Select a Staff'}),
             'email' : forms.TextInput(attrs={'class' : 'form-control', 'id' : 'floatingInput', 'placeholder': ''}),
             'notes' : forms.Textarea(attrs={'class' : 'form-control', 'placeholder': 'Additional Notes'}),
-            'date' : forms.DateInput(attrs={'class' : 'form-control', 'type': 'date'}),
-            'time' : forms.TimeInput(attrs={'class' : 'form-control', 'type': 'time'}),
+            'date' : forms.DateTimeInput(attrs={'class' : 'form-control', 'type': 'datetime-local'}),
         }

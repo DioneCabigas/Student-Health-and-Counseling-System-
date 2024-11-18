@@ -37,24 +37,25 @@ class Appointment(models.Model):
     )
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     appointment_type = models.CharField(max_length=100)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField()
     staff = models.CharField(max_length=100)
     notes = models.TextField()
+    # dateRequested = models.DateTimeField(auto_now_add=True, null=True)
     approval = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.patient.user.lastName}, {self.patient.user.firstName}'
 
 # APPOINTMENT REQUEST
-class AppointmentRequest(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    appointment_type = models.CharField(max_length=100)
-    date = models.DateTimeField()
-    staff = models.CharField(max_length=100)
-    notes = models.TextField()
-    dateRequested = models.DateTimeField(auto_now_add=True, null=True)
-    approval = models.BooleanField(default=False)
+# class AppointmentRequest(models.Model):
+#     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+#     appointment_type = models.CharField(max_length=100)
+#     date = models.DateTimeField()
+#     staff = models.CharField(max_length=100)
+#     notes = models.TextField()
+#     dateRequested = models.DateTimeField(auto_now_add=True, null=True)
+#     approval = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f'{self.patient.user.lastName} - {self.appointment_type}'
+#     def __str__(self):
+#         return f'{self.patient.user.lastName} - {self.appointment_type}'
 
