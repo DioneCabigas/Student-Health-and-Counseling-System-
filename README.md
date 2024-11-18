@@ -6,8 +6,8 @@
 
 2. **Dashboard**  
    - A central hub tailored for different user roles:
-     - Students: View appointments, prescriptions, notifications, and health records.
-     - Counseling Staff: Access patient lists, schedule appointments, and review health records.
+   - Students: View appointments, prescriptions, notifications, and health records.
+   - Counseling Staff: Access patient lists, schedule appointments, and review health records.
    
 3. **Book Appointment Module**  
    - Students can book appointments with healthcare or counseling staff.
