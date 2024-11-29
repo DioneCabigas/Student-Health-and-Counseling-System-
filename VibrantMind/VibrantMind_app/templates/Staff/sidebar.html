@@ -1,0 +1,22 @@
+<ul class="navbar-nav sidebar p-3">
+  <h6 class="fw-light">MAIN</h6>
+  <li class="nav-item active">
+    <a class="nav-link fw-semibold" href="{% url 'staff_dashboard' %}">Dashboard</a>
+  </li>
+  <li class="nav-item p-1"></li>
+    <a class="nav-link fw-semibold" href="{% url 'schedule_list' %}">Schedule</a>
+  </li>
+  <li class="nav-item p-1"></li>
+    <a class="nav-link fw-semibold" href="{% url 'patient_list' %}">Patients</a>
+  </li>
+  <li class="nav-item p-1"></li>
+    <a class="nav-link fw-semibold" href="{% url 'appointment_list' %}">Appointments</a>
+  </li>
+  <li class="nav-item p-1"></li>
+    <a class="nav-link fw-semibold" href="{% url 'appointment_request' %}">Appointment Requests</a>
+  </li>
+  <form method="POST" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+  </form>
+</ul>

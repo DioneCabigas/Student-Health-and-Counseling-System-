@@ -1,0 +1,244 @@
+body {
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper {
+    display: flex;
+    
+}
+
+#wrapper #content-wrapper {
+    background-color: white;
+    width: 100%;
+    max-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+    position: relative;
+    width: 300px;
+    height: 100vh;
+    background-color: white;
+    border-right: 0.5px solid rgb(0, 0, 0, .2);
+}
+
+.sidebar a {
+    color: #434e39;
+}
+
+/* NAVBAR */
+.navbar {
+    height: 100px;
+    background-color: white;
+    border-bottom: 0.5px solid rgb(0, 0, 0, .2);
+}
+
+.navbar-nav {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.nav-item {
+    color: black;
+}
+
+/* DASHBOARD */
+.dashboard-statistics {
+    margin-top: 30px;
+    background-color: #627254;
+    border: 0.5px solid rgb(0, 0, 0, .2);
+    border-radius: 10px;
+    width: 85%;
+    padding: 30px;
+    display: flex;
+}
+
+.d-stat-1, .d-stat-2, .d-stat-3 {
+    /* margin-top: 20px; */
+    border: 0.5px solid rgb(0, 0, 0, .2);
+    border-radius: 10px;
+    background-color: white;
+    width: 300px;
+    height: 110px;
+}
+
+.d-stat-content {
+    padding: 10px 0 0 30px;
+}
+
+.d-stat-content h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #76885B;
+}
+
+.d-stat-content h6 {
+    font-size: 16px;
+    opacity: 50%;
+}
+
+.dashboard-recent-appointments {
+    margin-top: 5px;
+    border: 0.5px solid rgb(0, 0, 0, .2);
+    border-radius: 10px;
+    height: 60%;
+}
+
+.dashboard-recent-appointments h4, a {
+    color: #627254;
+    padding: 20px;
+}
+
+.dashboard-recent-appointments-title {
+    padding-top: 40px;
+}
+
+.dashboard-recent-appointments-table {
+    margin-top: 20px;
+    padding: 20px;
+    height: 100%;
+}
+
+.dashboard-recent-appointments-table td {
+    padding: 20px;
+}
+
+.appointment-table-request, .appointment-table-type {
+    font-size: 14px;
+    padding-top: 100px;
+    opacity: 50%;
+}
+
+.dashboard-recent-appointments-table b {
+    color: #76885B;
+}
+
+/* LOGIN */
+.login-form {
+    padding: 50px;
+    border: 0.5px solid rgb(0, 0, 0, .2);
+    border-radius: 10px;
+    color: red;
+}
+
+/* APPOINTMENT */
+.add-patient-form {
+    padding: 50px;
+    border: 0.5px solid rgb(0, 0, 0, .2);
+    border-radius: 10px;
+}
+
+.add-patient-form button {
+    background-color: #627254;
+    border: none;
+}
+
+.add-patient-form button:hover {
+    background-color: #434e39;
+}
+
+.add-patient-form h4 {
+    color: #627254;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+}
+
+.form-select {
+    height: 58px;
+}
+
+.form-floating label {
+    margin-left: 10px;
+    opacity: 70%;
+}
+
+.appointment-body h3 {
+    padding-top: 15px;
+    font-size: 24px;
+    color: #627254;
+}
+
+.add-patient-btn {
+    background-color: #627254;
+    padding: 10px;
+    border: none;
+}
+
+.add-patient-btn:hover {
+    background-color: #434e39;
+}
+
+.add-patient-btn:not(:disabled):not(:disabled):active {
+    background-color: #434e39;
+}
+
+.appointment-item {
+    margin-top: 20px;
+    /* height: 100%; */
+}
+
+.appointment-table {
+    margin-top: 20px;
+    padding: 30px;
+    /* border: 0.5px solid rgb(0, 0, 0, .2);
+    border-radius: 10px; */
+    height: 100%;
+}
+
+.appointment-table td {
+    padding: 20px;
+}
+
+.appointment-table-request, .appointment-table-type {
+    font-size: 14px;
+    padding-top: 100px;
+    opacity: 50%;
+}
+
+.appointment-table b {
+    color: #76885B;
+}
+
+.appointment-table-view-btn {
+    border: 0.5px solid #627254;
+    width: 100px;
+}
+
+.appointment-table-view-btn:hover {
+    background-color: #434e39;
+}
+
+.appointment-table-view-btn:not(:disabled):not(:disabled):active {
+    background-color: #434e39; 
+}
+
+/* PATIENT */
+
+.patient-title {
+    color: #627254;
+}
+
+.patient-table {
+    padding-top: 30px;
+}
+
+.patient-table td {
+    padding: 20px 10px;
+}
+
+.patient-table span {
+    font-weight: bold;
+    color: #76885B;
+}
+

@@ -1,0 +1,40 @@
+<!-- <form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Submit</button>
+</form> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    
+    <!-- Display error message if authentication fails -->
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+    
+    <!-- Login form -->
+    <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Username Field -->
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required placeholder="Enter your username">
+        <br><br>
+        
+        <!-- Password Field -->
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required placeholder="Enter your password">
+        <br><br>
+        
+        <!-- Submit Button -->
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
