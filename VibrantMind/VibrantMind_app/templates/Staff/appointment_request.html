@@ -1,110 +1,91 @@
-{% load static %}
+{% extends 'staff/base.html' %}
 
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Appointment Requests</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    </head>
-    <body>
-        <div id="wrapper">
-            {% include "staff/sidebar.html" %}
-            <div id="content-wrapper" class="d-flex flex-column">
-                {% include "navbar.html" %}
-                <div id="content">
-                    <div class="container-fluid appointment-body" style="padding: 30px;">
-                        <div class="container-fluid d-flex justify-content-between">
-                            <h3>Appointment Requests</h3>
-                        </div>
-                        <div class="container-fluid" style="margin-top: 20px;">
-                            <div class="card">
-                                <div class="card-body">
-                                    <b>{{ appointmentRequest.patient.lastName }}, {{ appointmentRequest.patient.firstName }} {{ appointmentRequest.patient.middleName }}</b> <br> <span class="appointment-table-request">Requested at: {{ appointmentRequest.dateRequested }}</span>
-                                    <b>Standard</b> <span class="appointment-table-type"> - Counceling</span>
+{% block title %}Appointment Requests | Vibrand Mind{% endblock %}
+
+{% block navTitle %}Appointment Requests{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="margin-top: 20px;">
+    <div class="card">
+        <div class="card-body">
+            <b>{{ appointmentRequest.patient.lastName }}, {{ appointmentRequest.patient.firstName }} {{ appointmentRequest.patient.middleName }}</b> <br> <span class="appointment-table-request">Requested at: {{ appointmentRequest.dateRequested }}</span>
+            <b>Standard</b> <span class="appointment-table-type"> - Counceling</span>
+        </div>
+    </div>
+</div>
+<div class="container appointment-table">
+    <table class="table table-striped">
+        <!-- <thead>
+            <tr>
+                <th scope="col">Last Name</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Middle Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Age</th>
+            </tr>
+        </thead> -->
+        <tbody>
+            {% for appointmentRequest in appointmentRequests %}
+                {% if not appointmentRequest.approval %}
+                    <tr>
+                        <td><b>{{ appointmentRequest.patient.lastName }}, {{ appointmentRequest.patient.firstName }} {{ appointmentRequest.patient.middleName }}</b> <br> <span class="appointment-table-request">Requested at: {{ appointmentRequest.dateRequested }}</span></td>
+                        <td><b>Standard</b> <span class="appointment-table-type"> - Counceling</span></td>
+                        <td><button type="button" class="btn btn-outline-secondary appointment-table-view-btn" data-bs-toggle="modal" data-bs-target="#modal{{ appointmentRequest.id }}">View</button></td>
+                    </tr>
+                    <div class="modal fade" id="modal{{ appointmentRequest.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel{{ appointmentRequest.id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="modalLabel{{ appointmentRequest.id }}">Appointment Request</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <b>{{ appointmentRequest.patient.lastName }}, {{ appointmentRequest.patient.firstName }} {{ appointmentRequest.patient.middleName }}</b>
+                                    <br><br>
+                                    <p>{{ appointmentRequest.appointment_type }}</p>
+                                    <br>
+                                    <h6>Notes:</h6>
+                                    <p>{{ appointmentRequest.notes }}</p>
+                                    <h6>Preferred Date/Time:</h6>
+                                    <p>{{ appointmentRequest.date }} {{ appointmentRequest.time }}</p>
+                                    <form id="appointmentForm{{ appointmentRequest.id }}" method="post" action="{% url 'update_appointment' appointmentRequest.id %}">
+                                        {% csrf_token %}
+                                        <div class="mb-3">
+                                            <label for="staff{{ appointment.id }}">Session</label>
+                                            <select id="staff{{ appointment.id }}" name="staff" class="form-control" required>
+                                                <option value="" selected>Choose...</option>
+                                                <option value="Health Service" {% if appointment.staff == "Health Service" %}selected{% endif %}>Health Service</option>
+                                                <option value="Counseling Session" {% if appointment.staff == "Counseling Session" %}selected{% endif %}>Counseling Session</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="staff{{ appointment.id }}">Appointment Type</label>
+                                            <select id="staff{{ appointment.id }}" name="appointment_type" class="form-control" required>
+                                                <option value="" selected>Choose...</option>
+                                                <option value="Health Service" {% if appointment.appointment_type == "Face-to-face" %}selected{% endif %}>Face-to-face</option>
+                                                <option value="Counseling Session" {% if appointment.appointment_type == "Online" %}selected{% endif %}>Online</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="date{{ appointment.id }}">Date</label>
+                                            <input type="date" id="date{{ appointment.id }}" name="date" class="form-control" value="{{ appointment.date }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="time{{ appointment.id }}">Time</label>
+                                            <input type="time" id="time{{ appointment.id }}" name="time" class="form-control" value="{{ appointment.time }}">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" form="appointmentForm{{ appointmentRequest.id }}" class="btn btn-primary">Approve</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="container appointment-table">
-                            <table class="table table-striped">
-                                <!-- <thead>
-                                    <tr>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Middle Name</th>
-                                        <th scope="col">Gender</th>
-                                        <th scope="col">Age</th>
-                                    </tr>
-                                </thead> -->
-                                <tbody>
-                                    {% for appointmentRequest in appointmentRequests %}
-                                        {% if not appointmentRequest.approval %}
-                                            <tr>
-                                                <td><b>{{ appointmentRequest.patient.lastName }}, {{ appointmentRequest.patient.firstName }} {{ appointmentRequest.patient.middleName }}</b> <br> <span class="appointment-table-request">Requested at: {{ appointmentRequest.dateRequested }}</span></td>
-                                                <td><b>Standard</b> <span class="appointment-table-type"> - Counceling</span></td>
-                                                <td><button type="button" class="btn btn-outline-secondary appointment-table-view-btn" data-bs-toggle="modal" data-bs-target="#modal{{ appointmentRequest.id }}">View</button></td>
-                                            </tr>
-                                            <div class="modal fade" id="modal{{ appointmentRequest.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel{{ appointmentRequest.id }}" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="modalLabel{{ appointmentRequest.id }}">Appointment Request</h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <b>{{ appointmentRequest.patient.lastName }}, {{ appointmentRequest.patient.firstName }} {{ appointmentRequest.patient.middleName }}</b>
-                                                            <br><br>
-                                                            <p>{{ appointmentRequest.appointment_type }}</p>
-                                                            <br>
-                                                            <h6>Notes:</h6>
-                                                            <p>{{ appointmentRequest.notes }}</p>
-                                                            <h6>Preferred Date/Time:</h6>
-                                                            <p>{{ appointmentRequest.date }} {{ appointmentRequest.time }}</p>
-                                                            <form id="appointmentForm{{ appointmentRequest.id }}" method="post" action="{% url 'update_appointment' appointmentRequest.id %}">
-                                                                {% csrf_token %}
-                                                                <div class="mb-3">
-                                                                    <label for="staff{{ appointment.id }}">Session</label>
-                                                                    <select id="staff{{ appointment.id }}" name="staff" class="form-control" required>
-                                                                        <option value="" selected>Choose...</option>
-                                                                        <option value="Health Service" {% if appointment.staff == "Health Service" %}selected{% endif %}>Health Service</option>
-                                                                        <option value="Counseling Session" {% if appointment.staff == "Counseling Session" %}selected{% endif %}>Counseling Session</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="staff{{ appointment.id }}">Appointment Type</label>
-                                                                    <select id="staff{{ appointment.id }}" name="appointment_type" class="form-control" required>
-                                                                        <option value="" selected>Choose...</option>
-                                                                        <option value="Health Service" {% if appointment.appointment_type == "Face-to-face" %}selected{% endif %}>Face-to-face</option>
-                                                                        <option value="Counseling Session" {% if appointment.appointment_type == "Online" %}selected{% endif %}>Online</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="date{{ appointment.id }}">Date</label>
-                                                                    <input type="date" id="date{{ appointment.id }}" name="date" class="form-control" value="{{ appointment.date }}">
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="time{{ appointment.id }}">Time</label>
-                                                                    <input type="time" id="time{{ appointment.id }}" name="time" class="form-control" value="{{ appointment.time }}">
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" form="appointmentForm{{ appointmentRequest.id }}" class="btn btn-primary">Approve</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

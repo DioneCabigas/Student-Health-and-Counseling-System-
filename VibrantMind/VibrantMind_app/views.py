@@ -237,12 +237,16 @@ def edit_user_profile(request):
     # Render the edit page if the request is GET
     return render(request, 'student/health_record.html', {'user_profile': user_profile})
 
+def notification_view(request):
+    return render(request, 'student/notification.html')
+
+def prescription_view(request):
+    return render(request, 'student/prescription.html')
+
 
 # CHECK TO SEE IF AUTHENTICATED
 def some_view(request):
     if request.user.is_authenticated:
-        # User is authenticated
         return HttpResponse("Hello, authenticated user!")
     else:
-        # User is not authenticated
         return HttpResponse("You need to log in to access this page.")

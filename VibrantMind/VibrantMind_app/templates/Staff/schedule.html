@@ -2,9 +2,12 @@
 
 {% block title %}Schedule | Vibrand Mind{% endblock %}
 
+{% block navTitle %}Schedule{% endblock %}
+
 {% block content %}
 <div class="container-fluid" style="margin-top: 20px;">
-    <h3 style="padding-bottom: 40px;">Schedule</h3>
+    <!-- <h3 style="padding-bottom: 40px;">Schedule</h3> -->
+     <p>Upcoming Appointments</p>
     {% if appointments %}
             {% for appointment in appointments %}
             <div class="card" style="margin-bottom: 20px;">

@@ -128,7 +128,7 @@ h2 {
 }
 
 .btn-submit {
-  background-color: #788e64;
+  background-color: #874FFF;
   color: #fff;
   border: none;
   padding: 15px;
@@ -138,5 +138,6 @@ h2 {
 }
 
 .btn-submit:hover {
-  background-color: #556b45;
+  background-color: #663dbd;
+  color: #FFFFFF;
 }
