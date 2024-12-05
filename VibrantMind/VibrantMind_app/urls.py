@@ -12,12 +12,15 @@ urlpatterns = [
     # STAFF
     # path('', views.dashboard_view, name='dashboard'),
     path('staff/dashboard/', views.staff_dashboard_view, name='staff_dashboard'),
-    path('staff/patient', views.patient_view, name='patient_list'),
-    path('staff/appointment', views.appointment_view, name='appointment_list'),
-    path('staff/appointment_add_patient', views.appointment_scheduling_view),
-    path('staff/appointment_request', views.appointment_request_view, name='appointment_request'),
+    path('staff/patient/', views.patient_view, name='patient_list'),
+    path('staff/appointment/', views.appointment_view, name='appointment_list'),
+    path('staff/appointment_add_patient/', views.appointment_scheduling_view),
+    path('staff/appointment_request/', views.appointment_request_view, name='appointment_request'),
     path('appointments/update/<int:appointment_id>/', views.update_appointment, name='update_appointment'),
-    path('staff/schedule', views.schedule_view, name='schedule_list'),
+    path('appointments/delete/<int:appointment_id>/', views.delete_appointment, name='delete_appointment'),
+    path('appointments/delete/<int:appointment_id>/', views.delete_appointmentRequest, name='delete_appointmentRequest'),
+    path('appointments/done/<int:appointment_id>/', views.mark_appointment_done, name='mark_appointment_done'),
+    path('staff/schedule/', views.schedule_view, name='schedule_list'),
     # Filter
     path('schedule/<int:year>/<int:month>/', views.schedule_view, name='schedule_filtered'),
 

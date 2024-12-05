@@ -5,28 +5,44 @@
 {% block navTitle %}Patient List{% endblock %}
 
 {% block content %}
-<div class="container-fluid patient-table">
-    <table class="table table-striped table-hover">
+<div class="container-fluid">
+    {% if appointment_requests %}
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>NAME</th>
-                <th>#ID</th>
-                <th>AGE</th>
-                <th>GENDER</th>
-                <th></th>
+                <th>#</th>
+                <th>Patient Name</th>
+                <th>Requested At</th>
+                <th>Preferred Date/Time</th>
+                <th>Session Type</th>
+                <th>Appointment Type</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            {% for patient in patients %}
+            {% for appointment_request in appointment_requests %}
             <tr>
-                <td><span>{{ patient.user.lastName }}, {{ patient.user.firstName }} {{ patient.user.middleName }}</span></td>
-                <td>{{ patient.user.studentID }}</td>
-                <td>{{ patient.user.age }}</td>
-                <td>{{ patient.user.gender }}</td>
-                <td><a href="#">Profile</a></td>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ appointment_request.patient.firstName }} {{ appointment_request.patient.lastName }}</td>
+                <td>{{ appointment_request.dateRequested }}</td>
+                <td>{{ appointment_request.date }} - {{ appointment_request.time|time:"h:i A" }}</td>
+                <td>{{ appointment_request.session_type }}</td>
+                <td>{{ appointment_request.appointment_type }}</td>
+                <td>
+                    {% if appointment_request.is_done %}
+                        Finished
+                    {% elif appointment_request.approval %}
+                        Approved
+                    {% else %}
+                        Pending
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    {% else %}
+        <p>No patients have made appointment requests yet.</p>
+    {% endif %}
 </div>
 {% endblock %}

@@ -9,7 +9,10 @@
     <h2>Book an Appointment</h2>
     <form action="{% url 'book_appointment' %}" method="POST">
         {% csrf_token %}
-        {{ form.appointment_type }}
+        <div class="d-flex">
+            {{ form.session_type }}
+            {{ form.appointment_type }}
+        </div>
         {{ form.notes }}
         <div class="d-flex">
             {{ form.date }}

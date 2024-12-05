@@ -1,18 +1,40 @@
-<ul class="navbar-nav sidebar p-3">
-  <h6 class="fw-light">MAIN</h6>
-  <li class="nav-item p-1 active">
-    <a class="nav-link fw-semibold" href="{% url 'staff_dashboard' %}">Dashboard</a>
-  </li>
-  <li class="nav-item p-1">
-    <a class="nav-link fw-semibold" href="{% url 'schedule_list' %}">Schedule</a>
-  </li>
-  <li class="nav-item p-1">
-    <a class="nav-link fw-semibold" href="{% url 'patient_list' %}">Patients</a>
-  </li>
-  <li class="nav-item p-1">
-    <a class="nav-link fw-semibold" href="{% url 'appointment_list' %}">Appointments</a>
-  </li>
-  <li class="nav-item p-1">
-    <a class="nav-link fw-semibold" href="{% url 'appointment_request' %}">Appointment Requests</a>
-  </li>
-</ul>
+<div class="navbar-nav sidebar">
+  <div class="container">
+    {% load static %}
+    <img src="{% static 'images/vibrant-mind-logo-white.png' %}" alt="Logo" width="200px" style="margin-top: 20px ;">  
+  </div>
+  <ul class="p-1" style="margin: 0 auto;">
+    <hr style="border-top: 2px solid #FFFFFF;">
+    <li class="nav-item p-1 {% if request.path == '/staff/dashboard/' %}active{% endif %}">
+      <a class="nav-link fw-light align-items-center" href="{% url 'staff_dashboard' %}">
+        <i class="bi bi-layout-text-window-reverse" style="font-size: 18px; margin-right: 5px;"></i>
+        Dashboard
+      </a>
+    </li>
+    <li class="nav-item p-1 {% if request.path == '/staff/patient/' %}active{% endif %}">
+      <a class="nav-link fw-light" href="{% url 'patient_list' %}">
+        <i class="bi bi-person-vcard" style="font-size: 18px; margin-right: 5px;"></i>
+        Patients
+      </a>
+    </li>
+    <li class="nav-item p-1 {% if request.path == '/staff/schedule/' %}active{% endif %}">
+      <a class="nav-link fw-light" href="{% url 'schedule_list' %}">
+        <i class="bi bi-calendar-check" style="font-size: 18px; margin-right: 5px;"></i>
+        Schedule
+      </a>
+    </li>
+    <li class="nav-item p-1 {% if request.path == '/staff/appointment/' %}active{% endif %}">
+      <a class="nav-link fw-light" href="{% url 'appointment_list' %}">
+        <i class="bi bi-calendar" style="font-size: 18px; margin-right: 5px;"></i>
+        Appointments
+      </a>
+    </li>
+    <li class="nav-item p-1 {% if request.path == '/staff/appointment_request/' %}active{% endif %}">
+      <a class="nav-link fw-light" href="{% url 'appointment_request' %}">
+        <i class="bi bi-calendar-plus" style="font-size: 18px; margin-right: 5px;"></i>
+        Appointment Requests
+      </a>
+    </li>
+  </ul>
+
+</div>

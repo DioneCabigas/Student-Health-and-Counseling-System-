@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Patient, Appointment, UserProfile
 from .forms import AppointmentSchedulingForm
+from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
+from django.urls import reverse
 from django.http import HttpResponse
 from datetime import date
 import calendar
@@ -62,20 +64,24 @@ def logout_view(request):
 @login_required
 def staff_dashboard_view(request):
     patients = Patient.objects.all()    
-    appointments = Appointment.objects.filter(approval=True)
+    appointments = Appointment.objects.filter(approval=True, is_done=False).order_by('-dateRequested', '-timeRequested')
     appointment_requests = Appointment.objects.filter(approval=False)   
+    schedules = Appointment.objects.filter(approval=True, is_done=False).order_by('date', 'time')
 
     context = {
         'patients' : patients, 
         'appointments': appointments, 
-        'appointment_requests': appointment_requests
+        'appointment_requests': appointment_requests,
+        'schedules' : schedules
     }
     return render(request, 'staff/dashboard.html', context)
 
+@login_required
 def schedule_view(request):
-    appointments = Appointment.objects.all().order_by('date', 'time')
+    appointments = Appointment.objects.filter(approval=True, is_done=False).order_by('date', 'time')
 
-    return render(request, 'staff/schedule.html', {'appointments' : appointments})
+    context = {'appointments' : appointments}
+    return render(request, 'staff/schedule.html', context)
 
 # def schedule_view(request):
 #     today = date.today()
@@ -102,19 +108,27 @@ def schedule_view(request):
 
 #     return render(request, 'staff/schedule.html', {'appointments': appointments, 'year': year, 'month': month_name, 'day': day, 'months': months, 'days': days,})
 
-
+@login_required
 def patient_view(request):
     patients = Patient.objects.all()
+    appointment_requests = Appointment.objects.all()
 
-    context = {'patients' : patients}
+    context = {'patients' : patients, 'appointment_requests' : appointment_requests}
     return render(request, 'staff/patient.html', context)
 
+@login_required
 def appointment_view(request):
-    appointments = Appointment.objects.all()
+    status = request.GET.get('status', 'not_done')  # Default to 'not_done'
+    
+    if status == 'done':
+        appointments = Appointment.objects.filter(is_done=True).order_by('-dateRequested', '-timeRequested')
+    else:  # 'not_done' or any other value defaults to this
+        appointments = Appointment.objects.filter(approval=True, is_done=False).order_by('-dateRequested', '-timeRequested')
 
     context = {'appointments': appointments}
     return render(request, 'staff/appointment.html', context)
 
+@login_required
 def appointment_scheduling_view(request):
     if request.method == 'POST':
         form = AppointmentSchedulingForm(request.POST)
@@ -127,8 +141,9 @@ def appointment_scheduling_view(request):
     context = {'form': form}
     return render(request, 'staff/appointment_add_patient.html', context)
 
+@login_required
 def appointment_request_view(request):
-    appointmentRequests = Appointment.objects.all()
+    appointment_requests = Appointment.objects.filter(approval=False)
 
     if request.method == 'POST':
         form = AppointmentSchedulingForm(request.POST)
@@ -138,9 +153,10 @@ def appointment_request_view(request):
     else:
         form = AppointmentSchedulingForm()
 
-    context = {'appointmentRequests': appointmentRequests, 'form': form}
+    context = {'appointment_requests': appointment_requests, 'form': form}
     return render(request, 'staff/appointment_request.html', context)
 
+@login_required
 def update_appointment(request, appointment_id):
     if request.method == 'POST':
         appointment = get_object_or_404(Appointment, id=appointment_id)
@@ -162,9 +178,36 @@ def update_appointment(request, appointment_id):
         appointment.approval = True
         appointment.save()
 
-        return redirect('appointment_list')
+        return redirect('appointment_request')
 
     return render(request, 'staff/appointment_request.html')
+
+@login_required
+def mark_appointment_done(request, appointment_id):
+    if request.method == "POST":
+        appointment = get_object_or_404(Appointment, id=appointment_id)
+        appointment.is_done = True
+        appointment.save()
+        messages.success(request, "Appointment marked as completed!")
+    return redirect('appointment_list')
+
+@login_required
+def delete_appointment(request, appointment_id):
+    if request.method == "POST":
+        appointment = get_object_or_404(Appointment, id=appointment_id)
+        appointment.delete()
+        messages.success(request, "Appointment request deleted successfully!")
+        return redirect(reverse('appointment_list'))
+    return redirect(reverse('appointment_list'))
+
+@login_required
+def delete_appointmentRequest(request, appointment_id):
+    if request.method == "POST":
+        appointment = get_object_or_404(Appointment, id=appointment_id)
+        appointment.delete()
+        messages.success(request, "Appointment request deleted successfully!")
+        return redirect(reverse('appointment_request'))
+    return redirect(reverse('appointment_request'))
 
 # STUDENT
 @login_required

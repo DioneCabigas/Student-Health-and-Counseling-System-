@@ -12,13 +12,13 @@ class UserProfile(models.Model):
         ('F', 'Female'),
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    lastName = models.CharField(max_length=100, null=True)
-    firstName = models.CharField(max_length=100, null=True)
-    middleName = models.CharField(max_length=100, null=True)
-    studentID = models.CharField(max_length=11, null=True)
-    age = models.PositiveIntegerField(null=True)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICE, null=True)
-    user_type = models.CharField(max_length=50, choices=USER_TYPE, null=True)
+    lastName = models.CharField(max_length=100, blank=True, null=True)
+    firstName = models.CharField(max_length=100, blank=True, null=True)
+    middleName = models.CharField(max_length=100, blank=True, null=True)
+    studentID = models.CharField(max_length=11, blank=True, null=True)
+    age = models.PositiveIntegerField(blank=True, null=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICE, blank=True, null=True)
+    user_type = models.CharField(max_length=50, choices=USER_TYPE, blank=True, null=True)
     email = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
@@ -31,9 +31,6 @@ class Patient(models.Model):
         ('F', 'Female'),
     )
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    studentID = models.CharField(max_length=11, null=True)
-    age = models.IntegerField(null=True)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICE, null=True)
 
     def __str__(self):
         return f'{self.user.studentID}|{self.user.lastName}'
@@ -67,11 +64,13 @@ class Appointment(models.Model):
     time = models.TimeField(blank=True, null=True)
     staff = models.CharField(max_length=100, choices=STAFF_CHOICE, blank=True)
     notes = models.TextField(null=True)
-    dateRequested = models.DateTimeField(auto_now_add=True, null=True)  
+    dateRequested = models.DateField(auto_now_add=True, null=True)
+    timeRequested = models.TimeField(auto_now_add=True, null=True)
     approval = models.BooleanField(default=False)
+    is_done = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.appointment_type}'
+        return f'{self.patient.lastName} - {self.session_type} - {self.appointment_type}'
 
 # HEALTH RECORD
 class HealthRecord(models.Model):

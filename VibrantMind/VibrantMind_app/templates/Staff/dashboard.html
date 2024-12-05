@@ -4,49 +4,86 @@
 <div class="container dashboard-statistics">
     <div class="container d-stat-1">
         <div class="d-stat-content">
-            <h1>{{ patients.count }}</h1>
+            <h2>{{ patients.count }}</h2>
             <h6>Current Patients</h6>
         </div>
     </div>
     <div class="container d-stat-2">
         <div class="d-stat-content">
-            <h1>{{ appointments.count }}</h1>
-            <h6>Appointments</h6>
+            <h2>{{ appointments.count }}</h2>
+            <h6>Scheduled Appointments</h6>
         </div>
     </div>
     <div class="container d-stat-3">
         <div class="d-stat-content">
-            <h1>{{ appointment_requests.count }}</h1>
+            <h2>{{ appointment_requests.count }}</h2>
             <h6>Appointment Requests</h6>
         </div>
     </div>
 </div>
-<div class="container-fluid d-flex justify-content-between dashboard-recent-appointments-title">
-    <h4>Recent Appointments</h4>
-    <a href="{% url 'appointment_list' %}">See All</a>
-</div>
-<div class="container dashboard-recent-appointments-table">
-    <table class="table table-striped table-hover">
-        <!-- <thead>
-            <tr>
-                <th scope="col">Last Name</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Staff</th>
-                <th scope="col">Date</th>
-                <th scope="col">Time</th>
-            </tr>
-        </thead> -->
-        <tbody>
-            {% for appointment in appointments|slice:":5" %}
-                {% if appointment.approval %}
-                    <tr>
-                        <td><b>{{ appointment.patient.lastName }}, {{ appointment.patient.firstName }} {{ appointment.patient.middleName }}</b> <br> <span class="appointment-table-request">Requested at: {{ appointment.date }} {{ appointment.time }}</span></td>
-                        <td><b>Standard</b> <span class="appointment-table-type"> - Counceling</span></td>
-                        <td><b>{{ appointment.date }}</b> <span class="appointment-table-type">- {{ appointment.time }}</span></td>
-                    </tr>
-                {% endif %}
+<div class="d-flex justify-content-between">
+    <!-- Appointment Side -->
+    <div class="flex-fill">
+        <div class="container-fluid d-flex justify-content-between align-items-center dashboard-recent-appointments-title">
+            <p class="h5">Recent Appointments</p>
+            <a href="{% url 'appointment_list' %}">See All</a>
+        </div>
+        <div class="container">
+            {% for appointment in appointments %}
+                    <div class="card" style="margin-bottom: 10px;">
+                        <div class="card-body">
+                            <div class="d-flex" style="justify-content: space-between;">
+                                <div>
+                                    <b>{{ appointment.patient.lastName }}, {{ appointment.patient.firstName }} {{ appointment.patient.middleName }}</b>
+                                    <br> <span class="appointment-card-span">Scheduled for: {{ appointment.date }} - {{ appointment.time|time:"h:i A" }}</span>
+                                </div>
+                                <div style="margin: auto 0;">
+                                    <b>{{ appointment.session_type }}</b> <span class="appointment-card-span"> - {{ appointment.appointment_type }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             {% endfor %}
-        </tbody>
-    </table>
+        
+            {% if not appointments %}
+                <div class="text-center mt-5">
+                    <h5 style="color: #090131;">No pending appointments available</h5>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Schedule Side -->
+    <div style="width: 35%;">
+        <div class="container-fluid d-flex justify-content-between align-items-center dashboard-recent-appointments-title">
+            <p class="h5">Upcoming</p>
+            <a href="{% url 'schedule_list' %}">See All</a>
+        </div>
+        <div class="container">
+        {% if schedules %}
+            {% for appointment in schedules %}
+                <div class="card" style="margin-bottom: 10px;">
+                    <div class="card-body">
+                        <span class="appointment-card-span">{{ appointment.appointment_type }}</span>
+                        <p style="font-size: 20px;"><b>{{ appointment.patient.firstName }} {{ appointment.patient.lastName }} - {{ appointment.session_type }}</b>
+                            <br> <span class="appointment-card-span">{{ appointment.date }} - {{ appointment.time|time:"h:i A" }}</span>
+                        </p>
+                        
+                        <hr style="border-top: 2px solid #bbb;">
+                        <p><b>{{ appointment.patient.firstName }} {{ appointment.patient.lastName }}</b>
+                            <br> <span class="appointment-card-span">{{ appointment.patient.studentID }}</span>
+                        </p>
+                        <p></p>
+                    </div>
+                </div>
+            {% endfor %}
+            {% else %}
+            <div class="text-center mt-5">
+                <h6 style="color: #090131;">No scheduled appointments available</h6>
+            </div>
+        {% endif %}
+        </div>
+    </div>
 </div>
+
+
 {% endblock %}

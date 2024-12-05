@@ -6,86 +6,72 @@
 
 {% block content %}
 <div class="container-fluid" style="margin-top: 20px;">
-    <div class="card">
-        <div class="card-body">
-            <b>{{ appointmentRequest.patient.lastName }}, {{ appointmentRequest.patient.firstName }} {{ appointmentRequest.patient.middleName }}</b> <br> <span class="appointment-table-request">Requested at: {{ appointmentRequest.dateRequested }}</span>
-            <b>Standard</b> <span class="appointment-table-type"> - Counceling</span>
-        </div>
-    </div>
-</div>
-<div class="container appointment-table">
-    <table class="table table-striped">
-        <!-- <thead>
-            <tr>
-                <th scope="col">Last Name</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Middle Name</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Age</th>
-            </tr>
-        </thead> -->
-        <tbody>
-            {% for appointmentRequest in appointmentRequests %}
-                {% if not appointmentRequest.approval %}
-                    <tr>
-                        <td><b>{{ appointmentRequest.patient.lastName }}, {{ appointmentRequest.patient.firstName }} {{ appointmentRequest.patient.middleName }}</b> <br> <span class="appointment-table-request">Requested at: {{ appointmentRequest.dateRequested }}</span></td>
-                        <td><b>Standard</b> <span class="appointment-table-type"> - Counceling</span></td>
-                        <td><button type="button" class="btn btn-outline-secondary appointment-table-view-btn" data-bs-toggle="modal" data-bs-target="#modal{{ appointmentRequest.id }}">View</button></td>
-                    </tr>
-                    <div class="modal fade" id="modal{{ appointmentRequest.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel{{ appointmentRequest.id }}" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="modalLabel{{ appointmentRequest.id }}">Appointment Request</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <b>{{ appointmentRequest.patient.lastName }}, {{ appointmentRequest.patient.firstName }} {{ appointmentRequest.patient.middleName }}</b>
-                                    <br><br>
-                                    <p>{{ appointmentRequest.appointment_type }}</p>
-                                    <br>
-                                    <h6>Notes:</h6>
-                                    <p>{{ appointmentRequest.notes }}</p>
-                                    <h6>Preferred Date/Time:</h6>
-                                    <p>{{ appointmentRequest.date }} {{ appointmentRequest.time }}</p>
-                                    <form id="appointmentForm{{ appointmentRequest.id }}" method="post" action="{% url 'update_appointment' appointmentRequest.id %}">
-                                        {% csrf_token %}
-                                        <div class="mb-3">
-                                            <label for="staff{{ appointment.id }}">Session</label>
-                                            <select id="staff{{ appointment.id }}" name="staff" class="form-control" required>
-                                                <option value="" selected>Choose...</option>
-                                                <option value="Health Service" {% if appointment.staff == "Health Service" %}selected{% endif %}>Health Service</option>
-                                                <option value="Counseling Session" {% if appointment.staff == "Counseling Session" %}selected{% endif %}>Counseling Session</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="staff{{ appointment.id }}">Appointment Type</label>
-                                            <select id="staff{{ appointment.id }}" name="appointment_type" class="form-control" required>
-                                                <option value="" selected>Choose...</option>
-                                                <option value="Health Service" {% if appointment.appointment_type == "Face-to-face" %}selected{% endif %}>Face-to-face</option>
-                                                <option value="Counseling Session" {% if appointment.appointment_type == "Online" %}selected{% endif %}>Online</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="date{{ appointment.id }}">Date</label>
-                                            <input type="date" id="date{{ appointment.id }}" name="date" class="form-control" value="{{ appointment.date }}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="time{{ appointment.id }}">Time</label>
-                                            <input type="time" id="time{{ appointment.id }}" name="time" class="form-control" value="{{ appointment.time }}">
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" form="appointmentForm{{ appointmentRequest.id }}" class="btn btn-primary">Approve</button>
-                                </div>
-                            </div>
+    {% if appointment_requests %}
+        {% for appointment in appointment_requests %}
+            <div class="card" style="margin-bottom: 10px;">
+                <div class="card-body">
+                    <div class="d-flex" style="justify-content: space-between;">
+                        <div>
+                            <b>{{ appointment.patient.lastName }}, {{ appointment.patient.firstName }} {{ appointment.patient.middleName }}</b>
+                            <br> <span class="appointment-table-request">Requested at: {{ appointment.dateRequested }} - {{ appointment.timeRequested|time:"h:i A" }}</span>
+                        </div>
+                        <div style="margin: auto 0;">
+                            <b>{{ appointment.session_type }}</b> <span class="appointment-table-type"> - {{ appointment.appointment_type }}</span>
+                        </div>
+                        <div style="margin: auto 0;">
+                            <button type="button" class="btn btn-outline-secondary appointment-table-view-btn" data-bs-toggle="modal" data-bs-target="#modal{{ appointment.id }}">View</button>
                         </div>
                     </div>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
+                </div>
+            </div>
+            <div class="modal fade" id="modal{{ appointment.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel{{ appointment.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="modalLabel{{ appointment.id }}">Appointment Request</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><b>ID:</b> {{ appointment.patient.studentID }}</p>
+                            <b>{{ appointment.patient.lastName }}, {{ appointment.patient.firstName }} {{ appointment.patient.middleName }}</b>
+                            <br><br>
+                            <p><b>Session:</b> {{ appointment.session_type }} - {{ appointment.appointment_type }}</p>
+                            <h6><b>Preferred Date/Time:</b></h6>
+                            <p>{{ appointment.date }} - {{ appointment.time|time:"h:i A" }}</p>
+                            <h6><b>Notes:</b></h6>
+                            <p>{{ appointment.notes }}</p>
+                            
+                            <p>________________________________________________________________</p>
+                            <form id="appointmentForm{{ appointment.id }}" method="post" action="{% url 'update_appointment' appointment.id %}">
+                                {% csrf_token %}
+                                <div class="d-flex">
+                                    <div style="padding-right: 20px;">
+                                        <label for="date{{ appointment.id }}">Date:</label>
+                                        <input type="date" id="date{{ appointment.id }}" name="date" class="form-control" value="{{ appointment.date }}">
+                                    </div>
+                                    <div>
+                                        <label for="time{{ appointment.id }}">Time:</label>
+                                        <input type="time" id="time{{ appointment.id }}" name="time" class="form-control" value="{{ appointment.time }}">
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" form="appointmentForm{{ appointment.id }}" class="btn btn-primary" style="background-color: #874FFF; border: none;">Approve</button>
+                            <form method="post" action="{% url 'delete_appointmentRequest' appointment.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="text-center mt-5">
+            <h4 style="color: #090131;">No appointment requests available</h4>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
