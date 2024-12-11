@@ -1,13 +1,17 @@
+# Vibrant Mind 🧠 - Student Health and Counceling System 💊
+
+Vibrant Mind is designed to support the physical and mental well-being of students in an educational environment. This system offers a wide range of health and counseling services, including medical care, psychological support, and resources for managing stress, anxiety, and other mental health concerns. It aims to create a safe and supportive atmosphere where students can access professional care, receive guidance, and thrive both academically and personally. Through this system, students are encouraged to take an active role in their health, helping them overcome challenges and achieve success in their academic journey.
+
 ## System Overview
 ### Core Components
 1. **Login Module**  
    - Secure authentication using Django's built-in user model.
-   - Role-based access for students, staff, and admins.
+   - Role-based access for students and staff.
 
 2. **Dashboard**  
    - A central hub tailored for different user roles:
    - Students: View appointments, prescriptions, notifications, and health records.
-   - Counseling Staff: Access patient lists, schedule appointments, and review health records.
+   - Counseling Staff: Access patient lists and scheduled appointments.
    
 3. **Book Appointment Module**  
    - Students can book appointments with healthcare or counseling staff.
@@ -18,7 +22,7 @@
    - Easy access to records for both students and staff.
 
 5. **Prescription Management**  
-   - View and update prescribed medications, dosage, and progress reports.
+   - Add and view prescribed medications, dosage, and duration.
 
 6. **Notification System**  
    - Keeps users informed about new appointments, reminders, and other important updates.
@@ -27,19 +31,38 @@
    - Staff can manage appointment schedules and approvals.
    - Status updates for students regarding their appointment requests.
 
+## Installation/Quick Start
+After downloading the zip and opening it on your IDE, open terminal and follow these steps to get started:
+> [!NOTE]
+> You can also clone the repository and follow the steps
 
+Create your virutal environment
+```
+py -m venv .venv
+```
+> You can replace `.venv` with any name for your virtual environment
 
+Activate your virtual environment
+```
+.venv\Scripts\activate
+```
+Install the latest version of Django
+```
+pip install django
+```
+Change directory to VibrantMind
+```
+cd VibrantMind
+```
+Run `manage.py`
+```
+py manage.py runserver
+```
 
-### SET TO CHANGE
+## Documents
+### Gantt Chart
+To view our groups progress, click here to view our [Gantt Chart](https://docs.google.com/spreadsheets/d/1ZJAgBEXDusqZ-mhCv4EqpkDiCW66DiFIDaX5OVUyMtY/edit?usp=sharing).
 
-- FUNCTIONAL REQUIREMENT DOCUMENT
-https://docs.google.com/document/d/1e771U-celvlbXqstCa78tfGEW9QDBbj14u6sqvA80ws/edit?usp=sharing
+### ERD
 
-- GANTT CHART
-https://docs.google.com/spreadsheets/d/18ITegzR5nr96ui4txSycWD-stPE5RqoX/edit?usp=sharing&ouid=117047969151162919748&rtpof=true&sd=true
-
-- ERD
-https://lucid.app/lucidchart/4c74fb05-7fa0-48a1-a0f1-983c81edd9e9/edit?viewport_loc=-928%2C-525%2C3006%2C1393%2C0_0&invitationId=inv_808b98d7-743d-4fd5-a221-b876e825ee2d
-
-- UI/UX FIGMA
-https://www.figma.com/design/V8Ndu64BYRfERFfN0XL3y5/%5BCSIT327%5D-Student-Health-and-Counseling-System?node-id=0-1&t=hXA9WwyIdoAZGIeb-1
+### UI/UX FIGMA
