@@ -64,5 +64,28 @@ py manage.py runserver
 To view our groups progress, click here to view our [Gantt Chart](https://docs.google.com/spreadsheets/d/1ZJAgBEXDusqZ-mhCv4EqpkDiCW66DiFIDaX5OVUyMtY/edit?usp=sharing).
 
 ### ERD
+Vibrant Mind's Entity Relationship Diagram
+![Vibrant Mind ERD](https://github.com/DioneCabigas/Student-Health-and-Counseling-System-/blob/master/Student%20Health%20and%20Counseling%20System.png "VibrantMind ERD")
 
 ### UI/UX FIGMA
+> Add the screenshot here
+
+### Contributors
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/DioneCabigas" target="_blank" style="text-decoration: none;">
+        <img src="https://avatars.githubusercontent.com/u/143990611?v=4" width="100px" height="100px" style="border-radius: 50%;" alt="Dione"/>
+        <br />
+        <b style="text-decoration: none;">Dione Alfred Cabigas</b>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Nicbites" target="_blank" style="text-decoration: none;">
+        <img src="https://avatars.githubusercontent.com/u/120681026?v=4" width="100px" height="100px" style="border-radius: 50%;" alt="Nico"/>
+        <br />
+        <b style="text-decoration: none;">Nico Rivera</b>
+      </a>
+    </td>
+  </tr>
+</table>
