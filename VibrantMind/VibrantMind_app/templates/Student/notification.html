@@ -5,7 +5,17 @@
 {% block navTitle %}Notifications{% endblock %}
 
 {% block content %}
-<div>
-    Test
+<div class="notifications">
+    {% if messages %}
+        <ul class="notification-list">
+            {% for message in messages %}
+                <li class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No notifications at this time.</p>
+    {% endif %}
 </div>
 {% endblock %}

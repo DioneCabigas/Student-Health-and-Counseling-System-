@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="icon" href="{% static 'images/vibrant-mind-icon.ico' %}">
   </head>
   <body>
     <div id="wrapper">
@@ -17,7 +18,7 @@
           <nav class="navbar">
             <div class="container-fluid" style="margin-left: 20px">
               <div style="color: #090131;">
-                <h5><b>{% block navTitle %}Welcome! {{ request.user.userprofile.lastName }}, {{ request.user.userprofile.firstName }}{% endblock %}</b></h5>
+                <h5>{% block navTitle %}Welcome! {{ request.user.userprofile.lastName }}, {{ request.user.userprofile.firstName }}{% endblock %}</h5>
               </div>
               <div class="dropdown">
                 <button
@@ -28,7 +29,7 @@
                   aria-expanded="false"
                   style="background-color: transparent; border: none;"
                 >
-                  {{ request.user.userprofile.studentID }}
+                  {{ request.user.username }}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <li>

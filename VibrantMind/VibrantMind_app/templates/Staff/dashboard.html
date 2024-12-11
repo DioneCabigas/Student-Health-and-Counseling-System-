@@ -34,11 +34,12 @@
                         <div class="card-body">
                             <div class="d-flex" style="justify-content: space-between;">
                                 <div>
-                                    <b>{{ appointment.patient.lastName }}, {{ appointment.patient.firstName }} {{ appointment.patient.middleName }}</b>
-                                    <br> <span class="appointment-card-span">Scheduled for: {{ appointment.date }} - {{ appointment.time|time:"h:i A" }}</span>
+                                    <b>{{ appointment.patient.userProfile.lastName }}, {{ appointment.patient.userProfile.firstName }} {{ appointment.patient.userProfile.middleName }}</b>
+                                    <br> <span class="appointment-card-span">{{ appointment.patient.userProfile.user.username }}</span>
                                 </div>
-                                <div style="margin: auto 0;">
+                                <div style="margin-right: 20px;">
                                     <b>{{ appointment.session_type }}</b> <span class="appointment-card-span"> - {{ appointment.appointment_type }}</span>
+                                    <br> <span class="appointment-card-span">{{ appointment.date }} - {{ appointment.time|time:"h:i A" }}</span>
                                 </div>
                             </div>
                         </div>
@@ -64,13 +65,13 @@
                 <div class="card" style="margin-bottom: 10px;">
                     <div class="card-body">
                         <span class="appointment-card-span">{{ appointment.appointment_type }}</span>
-                        <p style="font-size: 20px;"><b>{{ appointment.patient.firstName }} {{ appointment.patient.lastName }} - {{ appointment.session_type }}</b>
+                        <p style="font-size: 20px;"><b>{{ appointment.patient.userProfile.firstName }} {{ appointment.patient.userProfile.lastName }} - {{ appointment.session_type }}</b>
                             <br> <span class="appointment-card-span">{{ appointment.date }} - {{ appointment.time|time:"h:i A" }}</span>
                         </p>
                         
                         <hr style="border-top: 2px solid #bbb;">
-                        <p><b>{{ appointment.patient.firstName }} {{ appointment.patient.lastName }}</b>
-                            <br> <span class="appointment-card-span">{{ appointment.patient.studentID }}</span>
+                        <p><b>{{ appointment.patient.userProfile.lastName }}, {{ appointment.patient.userProfile.firstName }} {{ appointment.patient.userProfile.middleName }}</b>
+                            <br> <span class="appointment-card-span">{{ appointment.patient.userProfile.user.username }}</span>
                         </p>
                         <p></p>
                     </div>

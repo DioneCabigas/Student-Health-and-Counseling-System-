@@ -1,21 +1,48 @@
 {% extends 'student/base.html' %}
 
-{% block navTitle %}Welcome User{% endblock %}
-
 {% block content %}
 <div class="dashboard-panels">
+    <!-- Upcoming Consultations -->
     <div class="panel large">
-        <h5>Upcoming Appointments</h5>
-        <a href="#" class="see-all">See All</a>
-        <p>No upcoming appointments</p>
+        <h5>Upcoming Consultations</h5>
+        {% if upcoming_consultations %}
+                {% for consultation in upcoming_consultations %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <div class="d-flex" style="justify-content: space-between;">
+                                <div>
+                                    <b>{{ consultation.session_type }}</b> - {{ consultation.appointment_type }} <> Dr. John Doe
+                                    <br> <span class="appointment-card-span">Scheduled for: {{ consultation.date }} - {{ consultation.time|time:"h:i A" }}</span>
+                                </div>
+                                <div style="margin: auto 0;">
+                                    <!-- <b>{{ consultation.staff }}Health Staff</b> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+        {% else %}
+            <p>No upcoming consultations.</p>
+        {% endif %}
     </div>
+
+    <!-- Completed Consultations -->
     <div class="panel small">
-        <h5>Recent Consultations</h5>
-        <p>No recent consultations</p>
-    </div>
-    <div class="panel small">
-        <h5>Prescriptions</h5>
-        <p>No prescriptions available</p>
+        <h5>Completed Consultations</h5>
+        {% if completed_consultations %}
+            <ul>
+                {% for consultation in completed_consultations %}
+                    <li>
+                        {{ consultation.date }} - {{ consultation.appointment_type }}
+                        <span>with {{ consultation.staff }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No completed consultations yet.</p>
+        {% endif %}
     </div>
 </div>
+
+
 {% endblock %}

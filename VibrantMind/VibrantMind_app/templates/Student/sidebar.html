@@ -1,18 +1,39 @@
-<ul class="navbar-nav sidebar p-3">
-  <h6 class="fw-light">MAIN</h6>
-  <li class="nav-item p-1 active">
-    <a class="nav-link fw-semibold" href="{% url 'student_dashboard' %}">Dashboard</a>
-  </li>
-  <li class="nav-item p-1">
-    <a class="nav-link fw-semibold" href="{% url 'health_record' %}">Health Record</a>
-  </li>
-  <li class="nav-item p-1">
-    <a class="nav-link fw-semibold" href="{% url 'book_appointment' %}">Book Appointment</a>
-  </li>
-  <li class="nav-item p-1">
-    <a class="nav-link fw-semibold" href="{% url 'prescription' %}">Prescription</a>
-  </li>
-  <li class="nav-item p-1">
-    <a class="nav-link fw-semibold" href="{% url 'notification' %}">Notifictions</a>
-  </li>
-</ul>
+<div class="sidebar">
+  <div class="container">
+    {% load static %}
+    <img src="{% static 'images/vibrant-mind-logo-white.png' %}" alt="Logo" width="200px" style="margin-top: 20px ;">  
+  </div>
+  <ul class="p-1" style="margin: 0 auto;">
+    <hr style="border-top: 2px solid #FFFFFF;">
+    <li class="nav-item p-1 {% if request.path == '/student/dashboard/' %}active{% endif %}">
+      <a class="nav-link fw-light align-items-center" href="{% url 'student_dashboard' %}">
+        <i class="bi bi-layout-text-window-reverse" style="font-size: 18px; margin-right: 5px;"></i>
+        Dashboard
+      </a>
+    </li>
+    <li class="nav-item p-1 {% if request.path == '/student/health-record/' %}active{% endif %}">
+      <a class="nav-link fw-light" href="{% url 'health_record' %}">
+        <i class="bi bi-person-vcard" style="font-size: 18px; margin-right: 5px;"></i>
+        Health Record
+      </a>
+    </li>
+    <li class="nav-item p-1 {% if request.path == '/student/book-appointment/' %}active{% endif %}">
+      <a class="nav-link fw-light" href="{% url 'book_appointment' %}">
+        <i class="bi bi-book" style="font-size: 18px; margin-right: 5px;"></i>
+        Book Apppointment
+      </a>
+    </li>
+    <li class="nav-item p-1 {% if request.path == '/student/prescription/' %}active{% endif %}">
+      <a class="nav-link fw-light" href="{% url 'prescription' %}">
+        <i class="bi bi-prescription" style="font-size: 18px; margin-right: 5px;"></i>
+        Prescription
+      </a>
+    </li>
+    <li class="nav-item p-1 {% if request.path == '/student/notification/' %}active{% endif %}">
+      <a class="nav-link fw-light" href="{% url 'notification' %}">
+        <i class="bi bi-bell" style="font-size: 18px; margin-right: 5px;"></i>
+        Notification
+      </a>
+    </li>
+  </ul>
+</div>

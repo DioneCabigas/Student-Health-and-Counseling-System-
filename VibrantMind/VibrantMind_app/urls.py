@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     # ACCOUNT
-    path('signup.html', views.register_view, name='register'),      
+    # path('signup.html', views.register_view, name='register'),      
     path('accounts/login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     # path("accounts/", include("django.contrib.auth.urls")),
@@ -20,6 +20,7 @@ urlpatterns = [
     path('appointments/delete/<int:appointment_id>/', views.delete_appointment, name='delete_appointment'),
     path('appointments/delete/<int:appointment_id>/', views.delete_appointmentRequest, name='delete_appointmentRequest'),
     path('appointments/done/<int:appointment_id>/', views.mark_appointment_done, name='mark_appointment_done'),
+
     path('staff/schedule/', views.schedule_view, name='schedule_list'),
     # Filter
     path('schedule/<int:year>/<int:month>/', views.schedule_view, name='schedule_filtered'),
@@ -31,6 +32,7 @@ urlpatterns = [
     path('edit-profile/', views.edit_user_profile, name='edit_user_profile'),
     path('student/notification/', views.notification_view, name='notification'),
     path('student/prescription/', views.prescription_view, name='prescription'),
+    path('add_prescription/<int:patient_id>/', views.add_prescription, name='add_prescription'),
 
     path('test', views.some_view, name='test'),
 ]

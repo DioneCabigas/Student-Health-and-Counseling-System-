@@ -1,6 +1,6 @@
 {% extends 'staff/base.html' %}
 
-{% block title %}Appointment Requests | Vibrand Mind{% endblock %}
+{% block title %}Appointment Requests | Vibrant Mind{% endblock %}
 
 {% block navTitle %}Appointment Requests{% endblock %}
 
@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="d-flex" style="justify-content: space-between;">
                         <div>
-                            <b>{{ appointment.patient.lastName }}, {{ appointment.patient.firstName }} {{ appointment.patient.middleName }}</b>
+                            <b>{{ appointment.patient.userProfile.user.username }} - {{ appointment.patient.userProfile.lastName }}, {{ appointment.patient.userProfile.firstName }} {{ appointment.patient.userProfile.middleName }}</b>
                             <br> <span class="appointment-table-request">Requested at: {{ appointment.dateRequested }} - {{ appointment.timeRequested|time:"h:i A" }}</span>
                         </div>
                         <div style="margin: auto 0;">
@@ -32,8 +32,8 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p><b>ID:</b> {{ appointment.patient.studentID }}</p>
-                            <b>{{ appointment.patient.lastName }}, {{ appointment.patient.firstName }} {{ appointment.patient.middleName }}</b>
+                            <p><b>ID:</b> {{ appointment.patient.userProfile.user.username }}</p>
+                            <b>{{ appointment.patient.userProfile.lastName }}, {{ appointment.patient.userProfile.firstName }} {{ appointment.patient.userProfile.middleName }}</b>
                             <br><br>
                             <p><b>Session:</b> {{ appointment.session_type }} - {{ appointment.appointment_type }}</p>
                             <h6><b>Preferred Date/Time:</b></h6>

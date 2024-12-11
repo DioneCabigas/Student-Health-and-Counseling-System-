@@ -1,6 +1,6 @@
 {% extends 'staff/base.html' %}
 
-{% block title %}Schedule | Vibrand Mind{% endblock %}
+{% block title %}Schedule | Vibrant Mind{% endblock %}
 
 {% block navTitle %}Schedule{% endblock %}
 
@@ -22,7 +22,7 @@
                         <p>{{ appointment.appointment_type }}</p>
                     </div>
                     <div class="container-fluid" style="width: 80%;">
-                        <p>{{ appointment.patient.lastName }}, {{ appointment.patient.firstName }} {{ appointment.patient.middleName }} <> {{ appointment.staff }}</p> 
+                        <p>{{ appointment.patient.userProfile.lastName }}, {{ appointment.patient.userProfile.firstName }} {{ appointment.patient.userProfile.middleName }} <> {{ appointment.staff }}</p> 
                         <p>Session - {{ appointment.session_type }}</p>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 {% extends 'staff/base.html' %}
 
-{% block title %}Patients | Vibrand Mind{% endblock %}
+{% block title %}Patients | Vibrant Mind{% endblock %}
 
 {% block navTitle %}Patient List{% endblock %}
 
@@ -23,7 +23,7 @@
             {% for appointment_request in appointment_requests %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ appointment_request.patient.firstName }} {{ appointment_request.patient.lastName }}</td>
+                <td>{{ appointment_request.patient.userProfile.firstName }} {{ appointment_request.patient.userProfile.lastName }}</td>
                 <td>{{ appointment_request.dateRequested }}</td>
                 <td>{{ appointment_request.date }} - {{ appointment_request.time|time:"h:i A" }}</td>
                 <td>{{ appointment_request.session_type }}</td>
@@ -31,6 +31,8 @@
                 <td>
                     {% if appointment_request.is_done %}
                         Finished
+                    {% elif appointment_request.is_removed %}
+                        Removed
                     {% elif appointment_request.approval %}
                         Approved
                     {% else %}

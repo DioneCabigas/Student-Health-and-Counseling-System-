@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Patient, Appointment, UserProfile
+from .models import Patient, Appointment, UserProfile, Prescription
 from .forms import AppointmentSchedulingForm
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -9,9 +9,6 @@ from django.urls import reverse
 from django.http import HttpResponse
 from datetime import date
 import calendar
-
-def landing_page(request):
-    return render(request, 'landing_page.html')
 
 # ACCOUNT
 def register_view(request):
@@ -64,9 +61,9 @@ def logout_view(request):
 @login_required
 def staff_dashboard_view(request):
     patients = Patient.objects.all()    
-    appointments = Appointment.objects.filter(approval=True, is_done=False).order_by('-dateRequested', '-timeRequested')
+    appointments = Appointment.objects.filter(approval=True, is_done=False, is_removed=False).order_by('-dateRequested', '-timeRequested')
     appointment_requests = Appointment.objects.filter(approval=False)   
-    schedules = Appointment.objects.filter(approval=True, is_done=False).order_by('date', 'time')
+    schedules = Appointment.objects.filter(approval=True, is_done=False, is_removed=False).order_by('date', 'time')
 
     context = {
         'patients' : patients, 
@@ -78,35 +75,10 @@ def staff_dashboard_view(request):
 
 @login_required
 def schedule_view(request):
-    appointments = Appointment.objects.filter(approval=True, is_done=False).order_by('date', 'time')
+    appointments = Appointment.objects.filter(approval=True, is_done=False, is_removed=False).order_by('date', 'time')
 
     context = {'appointments' : appointments}
     return render(request, 'staff/schedule.html', context)
-
-# def schedule_view(request):
-#     today = date.today()
-
-#     # Get year, month, and day from query parameters
-#     year = int(request.GET.get('year', today.year))
-#     month_name = request.GET.get('month', calendar.month_abbr[today.month])
-#     day = int(request.GET.get('day', today.day))
-
-#     # Convert month name back to month number
-#     try:
-#         month = list(calendar.month_abbr).index(month_name)
-#     except ValueError:
-#         month = today.month  # Default to current month if invalid
-
-#     start_date = date(year, month, 1)
-#     end_date = date(year, month, calendar.monthrange(year, month)[1])
-#     # Filter appointments from the specified day onward
-#     appointments = Appointment.objects.filter(date__range=(start_date, end_date)).order_by('date')
-
-#     # Pass abbreviated month names and days to the template
-#     months = calendar.month_abbr[1:]  # Skip the empty first entry
-#     days = list(range(1, calendar.monthrange(year, month)[1] + 1))  # Get days for the month
-
-#     return render(request, 'staff/schedule.html', {'appointments': appointments, 'year': year, 'month': month_name, 'day': day, 'months': months, 'days': days,})
 
 @login_required
 def patient_view(request):
@@ -118,12 +90,12 @@ def patient_view(request):
 
 @login_required
 def appointment_view(request):
-    status = request.GET.get('status', 'not_done')  # Default to 'not_done'
+    status = request.GET.get('status', 'not_done')  # Default: Not Done
     
     if status == 'done':
         appointments = Appointment.objects.filter(is_done=True).order_by('-dateRequested', '-timeRequested')
-    else:  # 'not_done' or any other value defaults to this
-        appointments = Appointment.objects.filter(approval=True, is_done=False).order_by('-dateRequested', '-timeRequested')
+    else:
+        appointments = Appointment.objects.filter(approval=True, is_done=False, is_removed=False).order_by('-dateRequested', '-timeRequested')
 
     context = {'appointments': appointments}
     return render(request, 'staff/appointment.html', context)
@@ -195,8 +167,10 @@ def mark_appointment_done(request, appointment_id):
 def delete_appointment(request, appointment_id):
     if request.method == "POST":
         appointment = get_object_or_404(Appointment, id=appointment_id)
-        appointment.delete()
-        messages.success(request, "Appointment request deleted successfully!")
+        appointment.is_removed = True
+        appointment.save()
+        # appointment.delete()
+        messages.success(request, "Appointment request deleted!")
         return redirect(reverse('appointment_list'))
     return redirect(reverse('appointment_list'))
 
@@ -212,16 +186,37 @@ def delete_appointmentRequest(request, appointment_id):
 # STUDENT
 @login_required
 def student_dashboard_view(request):
-    return render(request, 'student/dashboard.html')
+    # Get the user's profile
+    user_profile = UserProfile.objects.get(user=request.user)
+
+    # Fetch upcoming consultations
+    upcoming_consultations = Appointment.objects.filter(
+        # patient=user_profile, 
+        approval=True, 
+        is_done=False
+    ).order_by('date', 'time')
+
+    # Fetch completed consultations
+    completed_consultations = Appointment.objects.filter(
+        # patient=user_profile, 
+        is_done=True
+    ).order_by('-date', '-time')[:5]  # Limit to the last 5 consultations
+
+    # Context for rendering
+    context = {
+        'upcoming_consultations': upcoming_consultations,
+        'completed_consultations': completed_consultations,
+    }
+    return render(request, 'student/dashboard.html', context)
 
 def book_appointment(request):
     if request.method == 'POST':
         form = AppointmentSchedulingForm(request.POST)
         if form.is_valid():
             user_profile = UserProfile.objects.get(user=request.user)
-            Patient.objects.get_or_create(user=user_profile)
+            patient, created = Patient.objects.get_or_create(userProfile=user_profile)
                 
-            form.instance.patient = user_profile
+            form.instance.patient = patient
             form.save()
             
             return redirect('book_appointment')
@@ -232,22 +227,24 @@ def book_appointment(request):
     return render(request, 'student/book_appointment.html', context)
 
 def health_record(request):
-    user_profile = request.user
+    user = request.user
 
     try:
-        profile = user_profile.userprofile
-    except UserProfile.DoesNotExist:
+        profile = user.userprofile
+        patient = Patient.objects.get(userProfile=profile)
+    except (UserProfile.DoesNotExist, Patient.DoesNotExist):
         profile = None
+        patient = None
 
-    return render(request, 'student/health_record.html', {'profile' : profile})
+    return render(request, 'student/health_record.html', {'profile' : profile, 'patient' : patient, 'user' : user})
 
 def edit_user_profile(request):
-    # Retrieve the UserProfile instance
+
     user_profile = UserProfile.objects.get(user=request.user)
 
     if request.method == 'POST':
-        # Retrieve form data from POST request
-        student_id = request.POST.get('student_id')
+
+        user_id = request.POST.get('user_id')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         middle_name = request.POST.get('middle_name')
@@ -255,9 +252,8 @@ def edit_user_profile(request):
         age = request.POST.get('age')
         email = request.POST.get('email')
 
-        # Update the fields if data is provided
-        if student_id:
-            user_profile.studentID = student_id
+        if user_id:
+            user_profile.userID = user_id
         if first_name:
             user_profile.firstName = first_name
         if last_name:
@@ -271,21 +267,55 @@ def edit_user_profile(request):
         if email:
             user_profile.email = email
 
-        # Save the updated UserProfile instance
         user_profile.save()
 
-        # Redirect to the same page or another view (e.g., profile detail or list)
-        return redirect('health_record')  # Replace with your URL name
+        return redirect('health_record')
 
-    # Render the edit page if the request is GET
     return render(request, 'student/health_record.html', {'user_profile': user_profile})
 
 def notification_view(request):
     return render(request, 'student/notification.html')
 
 def prescription_view(request):
-    return render(request, 'student/prescription.html')
+    user = request.user
 
+    try:
+        patient = user.userprofile.patient
+    except AttributeError:
+        patient = None
+
+    print(patient)
+
+    # Only filter prescriptions if patient exists
+    prescriptions = Prescription.objects.filter(patient=patient) if patient else []
+
+    return render(request, 'student/prescription.html', {
+        'prescriptions': prescriptions,
+    })
+
+
+def add_prescription(request, patient_id):
+    # Retrieve the patient instance
+    patient = get_object_or_404(Patient, id=patient_id)
+    
+    if request.method == 'POST':
+        # Extract prescription details from the form
+        medicine_name = request.POST.get('medicine_name')
+        dosage = request.POST.get('dosage')
+        duration = request.POST.get('duration')
+        
+        # Create a new prescription for the patient
+        prescription = Prescription.objects.create(
+            patient=patient,  # Associate with the patient
+            medicine_name=medicine_name,
+            dosage=dosage,
+            duration=duration
+        )
+        
+        # Optionally, you can redirect to a page or back to the appointment list
+        return redirect('appointment_list')  # Redirect to appointments page or any relevant view
+
+    return HttpResponse("Invalid request method", status=400)
 
 # CHECK TO SEE IF AUTHENTICATED
 def some_view(request):

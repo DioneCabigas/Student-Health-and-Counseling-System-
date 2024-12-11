@@ -1,7 +1,36 @@
 {% extends 'student/base.html' %}
 
+{% block title %}Prescription | Vibrant Mind{% endblock %}
+
 {% block navTitle %}Prescription{% endblock %}
 
 {% block content %}
-Test
+<div class="card" style="height: 75vh;">
+    <h2 class="section-title">Prescription Details</h2>
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Medicine</th>
+                <th>Dosage</th>
+                <th>Duration</th>
+                <!-- <th>Prescribed By</th> -->
+                <th>Prescribed Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prescription in prescriptions %}
+            <tr>
+                <td>{{ prescription.medicine_name }}</td>
+                <td>{{ prescription.dosage }}</td>
+                <td>{{ prescription.duration }}</td>
+                <td>{{ prescription.date_prescribed }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No prescriptions found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
