@@ -16,7 +16,6 @@ Vibrant Mind is designed to support the physical and mental well-being of studen
    - [Account Management](#account-management)
    - [Staff Features](#staff-features)
    - [Student Features](#student-features)
-   - [Utility Functions](#utility-functions)
 5. [Supplementary Resources](#supplementary-resources)
    
 ---
