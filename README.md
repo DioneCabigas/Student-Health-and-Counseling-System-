@@ -117,9 +117,6 @@ py manage.py runserver
 ---
 
 ### **Account Management**
-- **Register View**: Handles user registration via `UserCreationForm`.
-  - **Function**: `register_view`
-  - **Template**: `account/signup.html`
 
 - **Login View**: Authenticates and logs in users, redirecting them based on their roles.
   - **Function**: `login_view`
