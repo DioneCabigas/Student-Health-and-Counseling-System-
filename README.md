@@ -198,7 +198,7 @@ py manage.py runserver
 - [UI/UX Design (Figma)](https://www.figma.com/design/V8Ndu64BYRfERFfN0XL3y5/%5BCSIT327%5D-Student-Health-and-Counseling-System?node-id=0-1&t=hXA9WwyIdoAZGIeb-1)
 > Add the screenshot here
 
-(![Screenshot 2024-12-12 104516](https://github.com/user-attachments/assets/d7cb38d2-4f15-484b-8c7c-2e7a30766fd3)
+![Screenshot 2024-12-12 104516](https://github.com/user-attachments/assets/d7cb38d2-4f15-484b-8c7c-2e7a30766fd3)
 
 
 ### Contributors
