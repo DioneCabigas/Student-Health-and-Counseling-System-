@@ -83,11 +83,6 @@ The purpose of this documentation is to outline the functionalities and scope of
 
 ---
 
-### **6. Feedback and Satisfaction Surveys**
-**Description**: Gathers feedback through surveys to measure satisfaction with services and identify areas for improvement.
-
----
-
 ## Installation/Quick Start
 After downloading the zip and opening it on your IDE, open terminal and follow these steps to get started:
 > [!NOTE]
