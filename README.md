@@ -196,9 +196,8 @@ py manage.py runserver
 - [Gantt Chart](https://docs.google.com/spreadsheets/d/18ITegzR5nr96ui4txSycWD-stPE5RqoX/edit?usp=sharing&ouid=117047969151162919748&rtpof=true&sd=true)
 - [Entity-Relationship Diagram (ERD)](https://lucid.app/lucidchart/4c74fb05-7fa0-48a1-a0f1-983c81edd9e9/edit?viewport_loc=-928%2C-525%2C3006%2C1393%2C0_0&invitationId=inv_808b98d7-743d-4fd5-a221-b876e825ee2d)
 - [UI/UX Design (Figma)](https://www.figma.com/design/V8Ndu64BYRfERFfN0XL3y5/%5BCSIT327%5D-Student-Health-and-Counseling-System?node-id=0-1&t=hXA9WwyIdoAZGIeb-1)
-> Add the screenshot here
 
-![Screenshot 2024-12-12 104516](https://github.com/user-attachments/assets/d7cb38d2-4f15-484b-8c7c-2e7a30766fd3)
+![Vibrant Mind ERD](https://github.com/DioneCabigas/Student-Health-and-Counseling-System-/blob/master/Student%20Health%20and%20Counseling%20System.png)
 
 
 ### Contributors
