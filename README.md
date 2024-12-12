@@ -184,13 +184,6 @@ py manage.py runserver
 
 ---
 
-### **Utility Functions**
-- **Authentication Check**: 
-  - **Function**: `some_view`
-  - **Description**: Displays a message based on user authentication.
-
----
-
 
 ## **Supplementary Resources**
 - [Gantt Chart](https://docs.google.com/spreadsheets/d/18ITegzR5nr96ui4txSycWD-stPE5RqoX/edit?usp=sharing&ouid=117047969151162919748&rtpof=true&sd=true)
