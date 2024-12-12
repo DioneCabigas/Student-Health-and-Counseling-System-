@@ -66,7 +66,6 @@ The purpose of this documentation is to outline the functionalities and scope of
 **Required Information**:
 - Counselor's Full Name
 - Counselor's Specialization
-- Counselor's Availability
 - Student's Full Name
 - Student's ID Number
 - Student's Contact Information
