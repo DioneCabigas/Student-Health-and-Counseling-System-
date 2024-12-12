@@ -11,7 +11,6 @@ Vibrant Mind is designed to support the physical and mental well-being of studen
    - [Health Record Management](#3-health-record-management)
    - [Counselor Assignment](#4-counselor-assignment)
    - [Health Alerts and Reminders](#5-health-alerts-and-reminders)
-   - [Feedback and Satisfaction Surveys](#6-feedback-and-satisfaction-surveys)
 4. [Code Overview](#code-overview)
    - [Landing Page](#landing-page)
    - [Account Management](#account-management)
